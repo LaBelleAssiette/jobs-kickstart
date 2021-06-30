@@ -4,12 +4,13 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
-In the project directory, you can run:
+To run the project with both api and client : 
 
-### `npm start`
+### `cd api`
+### `npm run dev`
 
 Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open [http://localhost:8081](http://localhost:8081) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
