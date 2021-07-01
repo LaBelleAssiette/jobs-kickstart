@@ -3,7 +3,6 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
-
 const ip = process.env.IP || '0.0.0.0';
 const PORT = process.env.PORT || 8080;
 
@@ -30,7 +29,6 @@ mongoose.connection.on('open', () => {
     console.log(`Server is running on port ${PORT}`);
     app.listen(PORT, ip);
 })
-
 
 
 

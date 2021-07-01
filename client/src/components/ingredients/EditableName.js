@@ -15,10 +15,8 @@ import {
     PopoverContent,
     useToast,
     Spinner,
-    Icon,
     Text
   } from "@chakra-ui/react"
-import { EditIcon } from '@chakra-ui/icons'
 import  FocusLock from "react-focus-lock"
 
 import { updateIngredient } from './ingredientsSlice';
@@ -53,13 +51,22 @@ const EditableName = ({ ingredient }) => {
             onClose()
         }
     }
+        
+    function convertUnicode(unicode) {
+        let prefix = "0x"
+        if (unicode) {
+            let uri = prefix + unicode
+            let intValue = parseInt(uri)
+            return  String.fromCodePoint(intValue)
+        }
+    }
 
     return (
         <>
             <Popover isOpen={isOpen} initialFocusRef={firstFieldRef} onOpen={onOpen} onClose={onClose} placement="bottom">
                 <PopoverTrigger>
                     <Stack direction="row" align="center" className="pointer">
-                        <Icon as={EditIcon}/>
+                        <p>{convertUnicode(ingredient.emoji)}</p>
                         <Text>{ingredient.name}</Text>
                     </Stack>
                 </PopoverTrigger>

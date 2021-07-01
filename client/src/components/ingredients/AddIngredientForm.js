@@ -5,10 +5,12 @@ import { ScaleFade, useToast, useDisclosure, Stack, Input, InputGroup, InputLeft
 import { AddIcon } from '@chakra-ui/icons'
 
 import { addNewIngredient } from "./ingredientsSlice";
+import EmojisFinder from '../EmojisFinder'
 
 const AddIngredientForm = () => {
   const [name, setName] = useState("");
   const [quantity, setQuantity] = useState("");
+  const [ emoji, setEmoji ] = useState("")
   const [ showForm, setShowForm ] = useState(false)
   const [ addRequestStatus, setAddRequestStatus ] = useState("idle")
 
@@ -26,7 +28,7 @@ const AddIngredientForm = () => {
     try {
       setAddRequestStatus("pending")
       const resultAction = await dispatch(
-        addNewIngredient({name: name, quantity: quantity})
+        addNewIngredient({name: name, quantity: quantity, emoji: emoji})
       )
       unwrapResult(resultAction)
       setName("")
@@ -73,6 +75,9 @@ const AddIngredientForm = () => {
                     </NumberInputStepper>
                   </NumberInput>
                 </InputGroup>
+
+                <EmojisFinder name={name} setEmoji={setEmoji}/>
+
                 <Button maxW='200px' type="submit" disabled={!canSave} colorScheme="green">
                   {addRequestStatus === "pending" && ( <Spinner size='xs' />)}
                   Save

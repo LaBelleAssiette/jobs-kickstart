@@ -9,11 +9,11 @@ import { selectIngredientById } from './ingredientsSlice'
 
 const IngredientExcerpt = ({ ingredientId }) => {
     const ingredient = useSelector((state) => selectIngredientById(state, ingredientId))
-    
+
     return (
         <>
             <Tr key={ingredient._id}>
-                <Th><EditableName ingredient={ingredient} /></Th>
+                <Th><EditableName ingredient={ingredient}/></Th>
                 <Td>{ingredient.quantity}</Td>
                 <Td><EditQuantity ingredient={ingredient}/></Td>
                 <Td><DeleteIngredient ingredient={ingredient}/></Td>

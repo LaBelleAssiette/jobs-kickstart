@@ -11,6 +11,9 @@ const Ingredient = mongoose.model(
             type: Number,
             required: true
         },
+        emoji: {
+            type: String
+        },
         date: {
             type: Date
         }
