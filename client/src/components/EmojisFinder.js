@@ -35,8 +35,8 @@ const EmojisFinder = ({ name, setEmoji }) => {
                 <ModalContent>
                     <ModalHeader>
                         <FormControl>
-                            <FormLabel>Find an emoji</FormLabel>
-                            <Input value={input} onChange={onChangeInput} />
+                            <FormLabel textAlign="center">Find an emoji</FormLabel>
+                            <Input value={input} onChange={onChangeInput} placeholder="Type an name..."/>
                         </FormControl>
                     </ModalHeader>
                     <ModalBody>

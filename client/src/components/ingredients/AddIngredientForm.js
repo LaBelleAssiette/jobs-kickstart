@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from 'react-redux'
 import { unwrapResult } from "@reduxjs/toolkit";
-import { ScaleFade, useToast, useDisclosure, Stack, Input, InputGroup, InputLeftAddon, Button, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, Spinner} from '@chakra-ui/react'
+import { ScaleFade, VStack, useToast, useDisclosure, Stack, Input, InputGroup, InputLeftAddon, Button, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, Spinner} from '@chakra-ui/react'
 import { AddIcon } from '@chakra-ui/icons'
 
 import { addNewIngredient } from "./ingredientsSlice";
@@ -43,12 +43,12 @@ const AddIngredientForm = () => {
 
   return (
     <>
-      <Stack direction="row" mt='3'>
-        <Button _active={{transform: "scale(1.05)"}} leftIcon={<AddIcon/>} onClick={() => {onToggle(); setShowForm(!showForm) }} colorScheme="green" variant="outline" mb='2' >New ingredient</Button>
+      <Stack direction={["column", "row", "row"]} mt='3'>
+        <Button  _active={{transform: "scale(1.05)"}} leftIcon={<AddIcon/>} onClick={() => {onToggle(); setShowForm(!showForm) }} colorScheme="teal" variant="outline" mb='2' >New ingredient</Button>
         {showForm ? (
         <ScaleFade initialScale={0.9} in={isOpen}>
           <form onSubmit={addNewItem}>
-            <Stack direction={["column", "row"]}>
+            <Stack direction={["column", "column", "row"]} bg="gray.50" boxShadow="md" borderRadius="xl" p='2' >
                 <Input
                   type="text"
                   name="name"
@@ -56,10 +56,9 @@ const AddIngredientForm = () => {
                   placeholder="Name"
                   value={name}
                   onChange={onChangeName}
-                  maxW='200px'
                   autoFocus
                   />
-                <InputGroup maxW='200px'>
+                <InputGroup>
                   <InputLeftAddon children="Quantity" />
                   <NumberInput
                     type="number"
@@ -67,7 +66,7 @@ const AddIngredientForm = () => {
                     id="quantity"
                     value={quantity}
                     onChange={onChangeQuantity}
-                    >
+                      >
                     <NumberInputField />
                     <NumberInputStepper>
                       <NumberIncrementStepper />
@@ -78,7 +77,7 @@ const AddIngredientForm = () => {
 
                 <EmojisFinder name={name} setEmoji={setEmoji}/>
 
-                <Button maxW='200px' type="submit" disabled={!canSave} colorScheme="green">
+                <Button type="submit" disabled={!canSave} colorScheme="green">
                   {addRequestStatus === "pending" && ( <Spinner size='xs' />)}
                   Save
                   </Button>
