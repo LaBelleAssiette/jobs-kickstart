@@ -53,7 +53,6 @@ const EmojisFinder = ({ name, setEmoji }) => {
                 </ModalContent>
             </Modal>
         </>
-
     )
 }
 

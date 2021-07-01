@@ -42,7 +42,6 @@ const AddIngredientForm = () => {
   };
 
   return (
-    <>
       <Stack direction={["column", "row", "row"]} mt='3'>
         <Button  _active={{transform: "scale(1.05)"}} leftIcon={<AddIcon/>} onClick={() => {onToggle(); setShowForm(!showForm) }} colorScheme="teal" variant="outline" mb='2' >New ingredient</Button>
         {showForm ? (
@@ -86,8 +85,6 @@ const AddIngredientForm = () => {
         </ScaleFade >
         ) : ( null )}
         </Stack>
-
-    </>
   );
 };
 

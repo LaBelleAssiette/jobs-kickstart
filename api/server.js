@@ -22,8 +22,8 @@ mongoose.connect(process.env.MONGO_URI,
         useFindAndModify: false
     }
 )
-.then(() => console.log('Connexion Mongodb réussie!'))
-.catch(err => console.log('Connexion Mongodb échouée!' + err))
+.then(() => console.log('Connected to MongoDB !'))
+.catch(err => console.log('Failed to connect to MongoDB !' + err))
 
 mongoose.connection.on('open', () => {
     console.log(`Server is running on port ${PORT}`);
