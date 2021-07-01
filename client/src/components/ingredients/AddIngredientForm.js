@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from 'react-redux'
 import { unwrapResult } from "@reduxjs/toolkit";
-import { ScaleFade, VStack, useToast, useDisclosure, Stack, Input, InputGroup, InputLeftAddon, Button, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, Spinner} from '@chakra-ui/react'
+import { ScaleFade, useToast, useDisclosure, Stack, Input, InputGroup, InputLeftAddon, Button, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, Spinner} from '@chakra-ui/react'
 import { AddIcon } from '@chakra-ui/icons'
 
 import { addNewIngredient } from "./ingredientsSlice";

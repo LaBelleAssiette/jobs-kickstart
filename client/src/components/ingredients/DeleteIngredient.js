@@ -1,12 +1,13 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import {IconButton, useToast } from "@chakra-ui/react"
+import {IconButton, Button, useToast, Modal, ModalContent, ModalHeader, ModalFooter, useDisclosure} from "@chakra-ui/react"
 import { DeleteIcon } from '@chakra-ui/icons'
 
 import { deleteIngredient } from './ingredientsSlice'
 
 const DeleteIngredient = ({ ingredient }) => {
     const toast = useToast()
+    const { isOpen, onOpen, onClose } = useDisclosure()
     const dispatch = useDispatch()
 
     const handleDelete = async (id) => {
@@ -22,12 +23,25 @@ const DeleteIngredient = ({ ingredient }) => {
     }
 
     return (
+        <>
         <IconButton 
             icon={<DeleteIcon/>} 
-            onClick={() => handleDelete(ingredient._id)} 
+            onClick={onOpen}
             bg="none" 
             color="red"
         />
+        <Modal isOpen={isOpen} onClose={onClose}>
+            <ModalContent>
+                <ModalHeader>
+                    Are you sure to delete {ingredient.name} ?
+                </ModalHeader>
+                <ModalFooter>
+                        <Button colorScheme="green"  mr='2'onClick={onClose}>No</Button>
+                        <Button colorScheme="red"  onClick={() => handleDelete(ingredient._id)}>Yes</Button>
+                </ModalFooter>
+            </ModalContent>
+        </Modal>
+        </>
     )
 }
 
