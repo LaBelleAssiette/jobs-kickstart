@@ -16,8 +16,9 @@ import {
     useToast,
     Spinner,
     Text
-  } from "@chakra-ui/react"
-import  FocusLock from "react-focus-lock"
+  } from "@chakra-ui/react";
+import  FocusLock from "react-focus-lock";
+import { EditIcon } from '@chakra-ui/icons';
 
 import { updateIngredient } from './ingredientsSlice';
 
@@ -68,6 +69,7 @@ const EditableName = ({ ingredient }) => {
                     <Stack direction="row" align="center" className="pointer">
                         <p>{convertUnicode(ingredient.emoji)}</p>
                         <Text>{ingredient.name}</Text>
+                        <EditIcon/>
                     </Stack>
                 </PopoverTrigger>
                 <PopoverContent p={5}>
