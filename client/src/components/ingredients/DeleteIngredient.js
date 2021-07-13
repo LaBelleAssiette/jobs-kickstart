@@ -19,15 +19,15 @@ const DeleteIngredient = ({ ingredient }) => {
             }
         } catch(e) {
             toast({position: "top", duration: 3000, status: "error", title: "Failed to delete ingredient : " + e.message})
-        } 
+        }
     }
 
     return (
         <>
-        <IconButton 
-            icon={<DeleteIcon/>} 
+        <IconButton
+            icon={<DeleteIcon/>}
             onClick={onOpen}
-            bg="none" 
+            bg="none"
             color="red"
         />
         <Modal isOpen={isOpen} onClose={onClose}>

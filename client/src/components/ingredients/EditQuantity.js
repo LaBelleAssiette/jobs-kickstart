@@ -32,23 +32,23 @@ const EditQuantity = ({ ingredient }) => {
             setLoading(false)
         }
     }
-    
+
     return (
         <form onSubmit={onQuantitySubmit}>
             <InputGroup maxW='180px'>
                 <InputLeftAddon
                     children={
-                        !loading 
+                        !loading
                         ?   (
                             <Box as="button" type="submit" width='30px' disabled={!canSave}>
                                 <Icon as={AddIcon} w={3}/>
                                 /
                                 <Icon as={MinusIcon} w={3}/>
                             </Box>
-                            ) 
-                        :   (  
+                            )
+                        :   (
                                 <Box w='30px'>
-                                    <Spinner size="md" /> 
+                                    <Spinner size="md" />
                                 </Box>
                             )
                         }

@@ -8,7 +8,8 @@ const ingredientsAdapter = createEntityAdapter({
 
 const initialState = ingredientsAdapter.getInitialState({
     status: 'idle',
-    error: null
+    error: null,
+    ingredientsContainer: []
 })
 
 export const fetchIngredients = createAsyncThunk('ingredients/fetchIngredients', 
@@ -28,7 +29,7 @@ export const addNewIngredient = createAsyncThunk('/ingredients/addNewIngredient'
 export const updateIngredient = createAsyncThunk('/ingredient/updateIngredient',
 async (ingredientData) => {
     const { id, ...data } = ingredientData
-    const response = await axios.put(`/api/ingredient/${id}`, data) 
+    const response = await axios.put(`/api/ingredient/${id}`, data)
     return response.data
 })
 
@@ -42,7 +43,13 @@ export const deleteIngredient = createAsyncThunk('/ingredients/deleteIngredient'
 const ingredientsSlice = createSlice({
     name: 'ingredients',
     initialState,
-    reducers : {},
+    reducers : {
+        filteredIngredients: (state, action) => {
+            state.ingredients = state.ingredients.filter( (ingredient) =>
+            ingredient.name.toLowerCase().includes(action.payload)
+            )
+        }
+    },
     extraReducers: {
         [fetchIngredients.pending]: (state, action) => {
             state.status = "loading"
@@ -64,8 +71,9 @@ const ingredientsSlice = createSlice({
 
 export default ingredientsSlice.reducer
 
-export const { 
-    selectAll: selectAllIngredients, 
-    selectById: selectIngredientById, 
+export const { filteredIngredients } = ingredientsSlice.actions
+export const {
+    selectAll: selectAllIngredients,
+    selectById: selectIngredientById,
     selectIds: selectIngredientsIds
 } = ingredientsAdapter.getSelectors(state => state.ingredients)

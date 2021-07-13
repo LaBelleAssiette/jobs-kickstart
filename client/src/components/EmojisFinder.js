@@ -48,7 +48,7 @@ const EmojisFinder = ({ name, setEmoji }) => {
                                     </Stack>
                                 </Box>
                             ))}
-                
+
                     </ModalBody>
                 </ModalContent>
             </Modal>

@@ -23,15 +23,15 @@ const IngredientsList = () => {
     if (ingredientStatus === "loading") {
         content = <Center><Spinner size="xl" color="red.500"/></Center>
     } else if (ingredientStatus === "succeeded") {
-        content = 
+        content =
         <>
             <Container maxW='md' mt='5' mb='5'>
                 <InputGroup>
                     <InputLeftAddon children={<Icon as={Search2Icon}/>}/>
                     <Input
-                        type="text" 
+                        type="text"
                         placeholder="Type a name..."
-                        {...searchInput} 
+                        {...searchInput}
                     />
                 </InputGroup>
             </Container>
@@ -42,8 +42,8 @@ const IngredientsList = () => {
                         {searchedIngredients.map( (ingredient) => (
                             <IngredientExcerpt key={ingredient._id} ingredientId={ingredient._id} />
                         ))}
-                    </IngredientTable>          
-                    ) 
+                    </IngredientTable>
+                    )
                 :   (
                     <IngredientTable>
                         {ingredientsIds.map( (ingredientId) => (

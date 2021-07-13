@@ -51,7 +51,7 @@ const EditableName = ({ ingredient }) => {
             onClose()
         }
     }
-        
+
     function convertUnicode(unicode) {
         let prefix = "0x"
         if (unicode) {
