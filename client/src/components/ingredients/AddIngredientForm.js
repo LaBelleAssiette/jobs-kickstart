@@ -15,8 +15,13 @@ const AddIngredientForm = () => {
   const [ addRequestStatus, setAddRequestStatus ] = useState("idle")
 
   const onChangeName = (e) => setName(e.target.value);
-  const onChangeQuantity = (quantity) => setQuantity(quantity);
+  const onChangeQuantity = (quantity) => {
+    setQuantity(quantity);
+    if(quantity.includes("-")) {
+      setQuantity(quantity.replace(/[^\w\s]/gi, ""))
+    }
 
+  }
   const canSave = [name, quantity].every(Boolean) && addRequestStatus === "idle" && /\S/.test(name) && /\S/.test(quantity)
 
   const dispatch = useDispatch()
@@ -63,6 +68,7 @@ const AddIngredientForm = () => {
                     type="number"
                     name="quantity"
                     id="quantity"
+                    min={0}
                     value={quantity}
                     onChange={onChangeQuantity}
                       >
