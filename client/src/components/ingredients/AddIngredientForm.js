@@ -17,7 +17,7 @@ const AddIngredientForm = () => {
   const onChangeName = (e) => setName(e.target.value);
   const onChangeQuantity = (quantity) => setQuantity(quantity);
 
-  const canSave = [name, quantity].every(Boolean) && addRequestStatus === "idle"
+  const canSave = [name, quantity].every(Boolean) && addRequestStatus === "idle" && /\S/.test(name) && /\S/.test(quantity)
 
   const dispatch = useDispatch()
   const toast = useToast()
