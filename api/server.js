@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended : true }));
 app.use("/api", ingredientsRoutes)
 
 mongoose.connect(process.env.MONGO_URI,
-    {   
+    {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useCreateIndex: true,

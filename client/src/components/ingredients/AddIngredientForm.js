@@ -20,7 +20,6 @@ const AddIngredientForm = () => {
     if(quantity.includes("-")) {
       setQuantity(quantity.replace(/[^\w\s]/gi, ""))
     }
-
   }
   const canSave = [name, quantity].every(Boolean) && addRequestStatus === "idle" && /\S/.test(name) && /\S/.test(quantity)
 
@@ -68,7 +67,6 @@ const AddIngredientForm = () => {
                     type="number"
                     name="quantity"
                     id="quantity"
-                    min={0}
                     value={quantity}
                     onChange={onChangeQuantity}
                       >

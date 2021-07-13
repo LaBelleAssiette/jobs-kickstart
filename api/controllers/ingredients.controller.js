@@ -4,10 +4,12 @@ const Ingredient = db.ingredient
 exports.addIngredient = async (req, res) => {
     let ingredient = new Ingredient(req.body)
     let result
-    
-    ingredient.validate(async (err) => {
-        if (err) return res.status(422).json(err)
 
+    ingredient.validate(async (err) => {
+        if (err) {
+            console.log(err._message);
+            return res.status(422).json(err._message)
+        }
         try {
             ingredient.date = new Date().toISOString()
             result = await ingredient.save()
