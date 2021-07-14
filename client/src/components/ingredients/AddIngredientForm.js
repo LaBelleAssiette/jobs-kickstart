@@ -1,10 +1,23 @@
 import React, { useState } from "react";
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { unwrapResult } from "@reduxjs/toolkit";
-import { Center, Container, Grid, Box, ScaleFade, useToast, useDisclosure, Stack, VStack, HStack, Input, InputGroup, InputLeftAddon, Button, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, Spinner } from '@chakra-ui/react'
+import { Container, Box, ScaleFade,
+  useToast,
+  useDisclosure,
+  Stack,
+  Input,
+  InputGroup,
+  InputLeftAddon,
+  Button,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
+  Spinner } from '@chakra-ui/react'
 import { AddIcon } from '@chakra-ui/icons'
 
-import { addNewIngredient } from "./ingredientsSlice";
+import { addNewIngredient, updateIngredient, selectIngredientByName } from "./ingredientsSlice";
 import EmojisFinder from '../EmojisFinder'
 
 const AddIngredientForm = () => {
@@ -13,6 +26,7 @@ const AddIngredientForm = () => {
   const [emoji, setEmoji] = useState("")
   const [showForm, setShowForm] = useState(false)
   const [addRequestStatus, setAddRequestStatus] = useState("idle")
+  const existingIngredient = useSelector((state) => selectIngredientByName(state, name))
 
   const onChangeName = (e) => setName(e.target.value);
   const onChangeQuantity = (quantity) => {
@@ -29,12 +43,18 @@ const AddIngredientForm = () => {
 
   const addNewItem = async (e) => {
     e.preventDefault();
+    setAddRequestStatus("pending")
     try {
-      setAddRequestStatus("pending")
-      const resultAction = await dispatch(
-        addNewIngredient({ name: name, quantity: quantity, emoji: emoji })
-      )
-      unwrapResult(resultAction)
+      if (existingIngredient.length) {
+        const addValue = Number(quantity)
+        const finalQuantity = existingIngredient[0].quantity + addValue
+        await dispatch(updateIngredient({id: existingIngredient[0]._id, quantity: finalQuantity}))
+      } else {
+        const resultAction = await dispatch(
+          addNewIngredient({ name: name, quantity: quantity, emoji: emoji })
+        )
+        unwrapResult(resultAction)
+      }
       setName("")
       setQuantity("")
       toast({ position: "top", duration: 3000, status: "success", title: `${name} added to stock !` })

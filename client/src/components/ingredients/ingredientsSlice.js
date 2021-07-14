@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, createEntityAdapter, createSelector } from '@reduxjs/toolkit';
 import axios from 'axios'
 
 const ingredientsAdapter = createEntityAdapter({
@@ -77,3 +77,8 @@ export const {
     selectById: selectIngredientById,
     selectIds: selectIngredientsIds
 } = ingredientsAdapter.getSelectors(state => state.ingredients)
+
+export const selectIngredientByName = createSelector(
+    [selectAllIngredients, (state, name) => name],
+    (ingredients, name) => ingredients.filter(ingredient => ingredient.name === name)
+)
