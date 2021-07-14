@@ -79,9 +79,9 @@ const AddIngredientForm = () => {
       if (existingIngredient.length) {
         const addValue = Number(quantity);
         const finalQuantity = existingIngredient[0].quantity + addValue;
-        dispatch(updateIngredient({ id: existingIngredient[0]._id, quantity: finalQuantity }));
+        await dispatch(updateIngredient({ id: existingIngredient[0]._id, quantity: finalQuantity }));
       } else {
-        const resultAction = dispatch(
+        const resultAction = await dispatch(
           addNewIngredient({ name: name, quantity: quantity, emoji: emoji })
         );
         unwrapResult(resultAction);
@@ -90,7 +90,7 @@ const AddIngredientForm = () => {
       setQuantity("");
       toast({ position: "top", duration: 3000, status: "success", title: `${name} added to stock !` })
     } catch (e) {
-      toast({ position: "top", duration: 3000, status: "error", title: "Failed to save : " + e.message })
+      toast({ position: "top", duration: 3000, status: "error", title: "Failed to save ingredient : " + e.message })
     } finally {
       setAddRequestStatus("idle");
     }

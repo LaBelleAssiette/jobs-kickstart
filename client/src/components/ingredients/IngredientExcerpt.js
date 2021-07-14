@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import {Tr, Th, Td } from "@chakra-ui/react"
+import { Tr, Th, Td} from "@chakra-ui/react"
 
 import EditableName from './EditableName'
 import EditQuantity from './EditQuantity'

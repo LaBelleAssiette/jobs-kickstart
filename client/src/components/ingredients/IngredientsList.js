@@ -14,7 +14,6 @@ const IngredientsList = () => {
     const ingredients = useSelector(selectAllIngredients)
     const ingredientsIds = useSelector(selectIngredientsIds)
     const ingredientStatus = useSelector((state) => state.ingredients.status)
-    const error = useSelector((state) => state.ingredients.error)
 
     const searchInput = useUserInput("")
     const searchedIngredients = useSearchable(ingredients, searchInput.value, (ingredient) => [ingredient.name])
@@ -54,7 +53,7 @@ const IngredientsList = () => {
             }
         </>
     } else if (ingredientStatus === "error") {
-        content = <Center>{error}</Center>
+        content = <Center><strong>Can not connect to the server right now, try again later...</strong></Center>
     }
 
     return (content)

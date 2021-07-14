@@ -18,3 +18,13 @@ Or run client and api separately :
 
 Runs the app in the development mode.\
 Open [http://localhost:8081](http://localhost:8081) to view it in the browser.
+
+# Main features
+
+CRUD on ingredient :
+Add a new ingredient with a name, quantity, and/or emoji
+Update the name
+Update the quantity by passing a number -> calculate the new quantity
+Delete an ingredient
+
+Searchbar allows to filter ingredients by name and display the ingredients matching this name

@@ -4,7 +4,7 @@ import { Table, Thead, Tbody, Tr, Th, Box } from "@chakra-ui/react"
 const IngredientTable = ({ children }) => {
     return (
         <Box overflowX = "auto">
-            <Table>
+            <Table size="sm">
                 <Thead>
                     <Tr>
                         <Th>Name</Th>

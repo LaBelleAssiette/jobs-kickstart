@@ -64,7 +64,9 @@ const ingredientsSlice = createSlice({
         },
 
         [addNewIngredient.fulfilled]: ingredientsAdapter.addOne,
+
         [updateIngredient.fulfilled]: ingredientsAdapter.upsertOne,
+
         [deleteIngredient.fulfilled]: ingredientsAdapter.removeOne
     }
 })
