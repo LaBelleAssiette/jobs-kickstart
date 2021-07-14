@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { unwrapResult } from '@reduxjs/toolkit'
 import { Box, Spinner, useToast, Icon,  InputGroup, InputLeftAddon, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper} from '@chakra-ui/react'
 import { AddIcon, MinusIcon} from '@chakra-ui/icons'
@@ -13,6 +13,8 @@ const EditQuantity = ({ ingredient }) => {
 
     const toast = useToast()
     const dispatch = useDispatch()
+
+    const error = useSelector((state) => state.ingredient)
 
     const canSave = addAmount.length
 

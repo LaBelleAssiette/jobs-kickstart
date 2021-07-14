@@ -44,7 +44,8 @@ exports.updateIngredient = async (req, res) => {
         updatedIngredient = await ingredient.save()
         res.status(200).json(updatedIngredient)
     } catch (e) {
-        res.status(400).json(e)
+        console.log(e.message);
+        res.status(400).json(e.message)
     }
 }
 
