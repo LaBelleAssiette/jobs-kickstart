@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import { unwrapResult } from "@reduxjs/toolkit";
-import axios from 'axios';
-import { AddIcon } from '@chakra-ui/icons';
+import axios from "axios";
+import { AddIcon } from "@chakra-ui/icons";
 import {
   Container, Box, ScaleFade,
   useToast,
@@ -18,10 +18,10 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   Spinner
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 
 import { addNewIngredient, updateIngredient, selectIngredientByName } from "./ingredientsSlice";
-import EmojisFinder from '../EmojisFinder';
+import EmojisFinder from "../EmojisFinder";
 
 const AddIngredientForm = () => {
   const [name, setName] = useState("");
@@ -50,7 +50,7 @@ const AddIngredientForm = () => {
   const onChangeQuantity = (quantity) => {
     setQuantity(quantity);
     if (quantity.includes("-")) {
-      setQuantity(quantity.replace(/[^\w\s]/gi, ""))
+      setQuantity(quantity.replace(/[^\w\s]/gi, ""));
     }
   };
 
@@ -58,10 +58,10 @@ const AddIngredientForm = () => {
     async function fetchEmojis() {
       try {
         if (emojiInput) {
-          const res = await axios.get(`https://api.emojisworld.io/v1/search?q=${emojiInput}`)
+          const res = await axios.get(`https://api.emojisworld.io/v1/search?q=${emojiInput}`);
           if (res.data.totals > 0) {
-            setfetchedEmojis(res.data.results)
-            setEmoji(res.data.results[0].unicode)
+            setfetchedEmojis(res.data.results);
+            setEmoji(res.data.results[0].unicode);
           }
         }
       }
@@ -69,7 +69,7 @@ const AddIngredientForm = () => {
         console.log(e);
       }
     }
-    fetchEmojis()
+    fetchEmojis();
   }, [emojiInput]);
 
   const addNewItem = async (e) => {
@@ -88,9 +88,9 @@ const AddIngredientForm = () => {
       }
       setName("");
       setQuantity("");
-      toast({ position: "top", duration: 3000, status: "success", title: `${name} added to stock !` })
+      toast({ position: "top", duration: 3000, status: "success", title: `${name} added to stock !` });
     } catch (e) {
-      toast({ position: "top", duration: 3000, status: "error", title: "Failed to save ingredient : " + e.message })
+      toast({ position: "top", duration: 3000, status: "error", title: "Failed to save ingredient : " + e.message });
     } finally {
       setAddRequestStatus("idle");
     }
@@ -102,7 +102,7 @@ const AddIngredientForm = () => {
         <Button
           _active={{ transform: "scale(1.05)" }}
           leftIcon={<AddIcon />}
-          onClick={() => { onToggle(); setShowForm(!showForm) }}
+          onClick={() => { onToggle(); setShowForm(!showForm); }}
           colorScheme="teal" variant="outline" mb='2'
         >
           New ingredient

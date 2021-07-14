@@ -1,86 +1,86 @@
-import { createSlice, createAsyncThunk, createEntityAdapter, createSelector } from '@reduxjs/toolkit';
-import axios from 'axios'
+import { createSlice, createAsyncThunk, createEntityAdapter, createSelector } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const ingredientsAdapter = createEntityAdapter({
-    selectId: (ingredient) => ingredient._id,
-    sortComparer: (a, b) => b.date.localeCompare(a.date)
-})
+  selectId: (ingredient) => ingredient._id,
+  sortComparer: (a, b) => b.date.localeCompare(a.date)
+});
 
 const initialState = ingredientsAdapter.getInitialState({
-    status: 'idle',
-    error: null,
-    ingredientsContainer: []
-})
+  status: "idle",
+  error: null,
+  ingredientsContainer: []
+});
 
-export const fetchIngredients = createAsyncThunk('ingredients/fetchIngredients', 
-    async () => {
-        const response = await axios.get('/api/ingredients')
-        return response.data
-    }
-)
+export const fetchIngredients = createAsyncThunk("ingredients/fetchIngredients", 
+  async () => {
+    const response = await axios.get("/api/ingredients");
+    return response.data;
+  }
+);
 
-export const addNewIngredient = createAsyncThunk('/ingredients/addNewIngredient',
-    async data => {
-        const response = await axios.post('/api/ingredient', data)
-        return response.data
-    }
-)
+export const addNewIngredient = createAsyncThunk("/ingredients/addNewIngredient",
+  async data => {
+    const response = await axios.post("/api/ingredient", data);
+    return response.data;
+  }
+);
 
-export const updateIngredient = createAsyncThunk('/ingredient/updateIngredient',
-async (ingredientData) => {
-    const { id, ...data } = ingredientData
-    const response = await axios.put(`/api/ingredient/${id}`, data)
-    return response.data
-})
+export const updateIngredient = createAsyncThunk("/ingredient/updateIngredient",
+  async (ingredientData) => {
+    const { id, ...data } = ingredientData;
+    const response = await axios.put(`/api/ingredient/${id}`, data);
+    return response.data;
+  });
 
-export const deleteIngredient = createAsyncThunk('/ingredients/deleteIngredient',
-    async id => {
-        await axios.delete(`/api/ingredient/${id}`)
-        return id
-    }
-)
+export const deleteIngredient = createAsyncThunk("/ingredients/deleteIngredient",
+  async id => {
+    await axios.delete(`/api/ingredient/${id}`);
+    return id;
+  }
+);
 
 const ingredientsSlice = createSlice({
-    name: 'ingredients',
-    initialState,
-    reducers : {
-        filteredIngredients: (state, action) => {
-            state.ingredients = state.ingredients.filter( (ingredient) =>
-            ingredient.name.toLowerCase().includes(action.payload)
-            )
-        }
-    },
-    extraReducers: {
-        [fetchIngredients.pending]: (state, action) => {
-            state.status = "loading"
-        },
-        [fetchIngredients.fulfilled] : (state, action) => {
-            state.status = "succeeded"
-            ingredientsAdapter.upsertMany(state, action.payload)
-        },
-        [fetchIngredients.rejected] : (state, action) => {
-            state.status = "error"
-            state.error = action.error.message
-        },
-
-        [addNewIngredient.fulfilled]: ingredientsAdapter.addOne,
-
-        [updateIngredient.fulfilled]: ingredientsAdapter.upsertOne,
-
-        [deleteIngredient.fulfilled]: ingredientsAdapter.removeOne
+  name: "ingredients",
+  initialState,
+  reducers : {
+    filteredIngredients: (state, action) => {
+      state.ingredients = state.ingredients.filter( (ingredient) =>
+        ingredient.name.toLowerCase().includes(action.payload)
+      );
     }
-})
+  },
+  extraReducers: {
+    [fetchIngredients.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [fetchIngredients.fulfilled] : (state, action) => {
+      state.status = "succeeded";
+      ingredientsAdapter.upsertMany(state, action.payload);
+    },
+    [fetchIngredients.rejected] : (state, action) => {
+      state.status = "error";
+      state.error = action.error.message;
+    },
 
-export default ingredientsSlice.reducer
+    [addNewIngredient.fulfilled]: ingredientsAdapter.addOne,
 
-export const { filteredIngredients } = ingredientsSlice.actions
+    [updateIngredient.fulfilled]: ingredientsAdapter.upsertOne,
+
+    [deleteIngredient.fulfilled]: ingredientsAdapter.removeOne
+  }
+});
+
+export default ingredientsSlice.reducer;
+
+export const { filteredIngredients } = ingredientsSlice.actions;
 export const {
-    selectAll: selectAllIngredients,
-    selectById: selectIngredientById,
-    selectIds: selectIngredientsIds
-} = ingredientsAdapter.getSelectors(state => state.ingredients)
+  selectAll: selectAllIngredients,
+  selectById: selectIngredientById,
+  selectIds: selectIngredientsIds
+} = ingredientsAdapter.getSelectors(state => state.ingredients);
 
 export const selectIngredientByName = createSelector(
-    [selectAllIngredients, (state, name) => name],
-    (ingredients, name) => ingredients.filter(ingredient => ingredient.name === name)
-)
+  [selectAllIngredients, (state, name) => name],
+  (ingredients, name) => ingredients.filter(ingredient => ingredient.name === name)
+);

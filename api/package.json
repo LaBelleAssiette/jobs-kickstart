@@ -8,7 +8,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "api": "nodemon server.js",
     "client": "cd ../ && npm start --prefix client",
-    "dev": "concurrently \"npm run api\" \"npm run client\""
+    "dev": "concurrently \"npm run api\" \"npm run client\"",
+    "lint": "eslint . ",
+    "lintfix": "eslint . --fix"
   },
   "author": "Maxence Traina",
   "license": "ISC",
@@ -19,5 +21,9 @@
     "express": "^4.17.1",
     "mongoose": "^5.13.0",
     "nodemon": "^2.0.7"
+  },
+  "devDependencies": {
+    "eslint": "^7.30.0",
+    "eslint-config-google": "^0.14.0"
   }
 }
