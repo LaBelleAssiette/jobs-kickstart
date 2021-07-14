@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
 import { unwrapResult } from "@reduxjs/toolkit";
-import { Container, Box, ScaleFade,
+import axios from 'axios';
+import { AddIcon } from '@chakra-ui/icons';
+import {
+  Container, Box, ScaleFade,
   useToast,
   useDisclosure,
   Stack,
@@ -14,54 +17,82 @@ import { Container, Box, ScaleFade,
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
-  Spinner } from '@chakra-ui/react'
-import { AddIcon } from '@chakra-ui/icons'
+  Spinner
+} from '@chakra-ui/react';
 
 import { addNewIngredient, updateIngredient, selectIngredientByName } from "./ingredientsSlice";
-import EmojisFinder from '../EmojisFinder'
+import EmojisFinder from '../EmojisFinder';
 
 const AddIngredientForm = () => {
   const [name, setName] = useState("");
   const [quantity, setQuantity] = useState("");
-  const [emoji, setEmoji] = useState("")
-  const [showForm, setShowForm] = useState(false)
-  const [addRequestStatus, setAddRequestStatus] = useState("idle")
-  const existingIngredient = useSelector((state) => selectIngredientByName(state, name))
+  const [emoji, setEmoji] = useState("");
+  const [emojiInput, setEmojiInput] = useState("");
+  const [fetchedEmojis, setfetchedEmojis] = useState([]);
+  const [showForm, setShowForm] = useState(false);
+  const [addRequestStatus, setAddRequestStatus] = useState("idle");
 
-  const onChangeName = (e) => setName(e.target.value);
+  const existingIngredient = useSelector((state) => selectIngredientByName(state, name));
+
+  const dispatch = useDispatch();
+  const { isOpen, onToggle } = useDisclosure();
+  const toast = useToast();
+
+  const canSave = [name, quantity].every(Boolean) && addRequestStatus === "idle" && /\S/.test(name) && /\S/.test(quantity);
+
+  const onChangeInput = async e => setEmojiInput(e.target.value);
+
+  const onChangeName = (e) => {
+    setName(e.target.value);
+    setEmojiInput(e.target.value);
+  };
+
   const onChangeQuantity = (quantity) => {
     setQuantity(quantity);
     if (quantity.includes("-")) {
       setQuantity(quantity.replace(/[^\w\s]/gi, ""))
     }
-  }
-  const canSave = [name, quantity].every(Boolean) && addRequestStatus === "idle" && /\S/.test(name) && /\S/.test(quantity)
+  };
 
-  const dispatch = useDispatch()
-  const toast = useToast()
-  const { isOpen, onToggle } = useDisclosure()
+  React.useEffect(() => {
+    async function fetchEmojis() {
+      try {
+        if (emojiInput) {
+          const res = await axios.get(`https://api.emojisworld.io/v1/search?q=${emojiInput}`)
+          if (res.data.totals > 0) {
+            setfetchedEmojis(res.data.results)
+            setEmoji(res.data.results[0].unicode)
+          }
+        }
+      }
+      catch (e) {
+        console.log(e);
+      }
+    }
+    fetchEmojis()
+  }, [emojiInput]);
 
   const addNewItem = async (e) => {
     e.preventDefault();
-    setAddRequestStatus("pending")
+    setAddRequestStatus("pending");
     try {
       if (existingIngredient.length) {
-        const addValue = Number(quantity)
-        const finalQuantity = existingIngredient[0].quantity + addValue
-        await dispatch(updateIngredient({id: existingIngredient[0]._id, quantity: finalQuantity}))
+        const addValue = Number(quantity);
+        const finalQuantity = existingIngredient[0].quantity + addValue;
+        dispatch(updateIngredient({ id: existingIngredient[0]._id, quantity: finalQuantity }));
       } else {
-        const resultAction = await dispatch(
+        const resultAction = dispatch(
           addNewIngredient({ name: name, quantity: quantity, emoji: emoji })
-        )
-        unwrapResult(resultAction)
+        );
+        unwrapResult(resultAction);
       }
-      setName("")
-      setQuantity("")
+      setName("");
+      setQuantity("");
       toast({ position: "top", duration: 3000, status: "success", title: `${name} added to stock !` })
     } catch (e) {
       toast({ position: "top", duration: 3000, status: "error", title: "Failed to save : " + e.message })
     } finally {
-      setAddRequestStatus("idle")
+      setAddRequestStatus("idle");
     }
   };
 
@@ -113,7 +144,7 @@ const AddIngredientForm = () => {
                   </NumberInput>
                 </InputGroup>
 
-                <EmojisFinder name={name} setEmoji={setEmoji} />
+                <EmojisFinder emoji={emoji} setEmoji={setEmoji} emojiInput={emojiInput} fetchedEmojis={fetchedEmojis} onChangeInput={onChangeInput} />
 
                 <Button type="submit" disabled={!canSave} colorScheme="green">
                   {addRequestStatus === "pending" && (<Spinner size='xs' />)}

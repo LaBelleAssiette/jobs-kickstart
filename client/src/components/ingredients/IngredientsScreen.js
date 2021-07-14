@@ -1,5 +1,5 @@
 import React from "react"
-import { Container, Center } from '@chakra-ui/react'
+import { Container } from '@chakra-ui/react'
 
 import AddIngredientForm from "./AddIngredientForm"
 import IngredientsList from "./IngredientsList"
