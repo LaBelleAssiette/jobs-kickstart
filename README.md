@@ -33,6 +33,6 @@ Linter config for api is in api -> eslintconfig.json.
 Add a new ingredient with a name, quantity, and/or emoji. \
 Update the name. \
 Update the quantity by passing a number -> calculate the new quantity. \
-Delete an ingredient. \
+Delete an ingredient.
 
 Searchbar allows to filter ingredients by name and display the ingredients matching this name.
