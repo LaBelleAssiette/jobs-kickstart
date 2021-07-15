@@ -10,6 +10,7 @@ import IngredientTable from "./IngredientTable";
 import IngredientExcerpt from "./IngredientExcerpt";
 import useWindowSize from "../hooks/useSize";
 import SmallIngredientExcerpt from "./SmallIngredientExcerpt";
+import * as config from "../../config/index";
 
 const IngredientsList = () => {
   const ingredients = useSelector(selectAllIngredients);
@@ -39,14 +40,20 @@ const IngredientsList = () => {
           <Text color="gray" mb='2'>{searchedIngredients?.length ? `(${searchedIngredients.length}) ingredients` : "(0) ingredients"}</Text>
           {searchInput.value.length
             ?   (
-              <IngredientTable>
-                {searchedIngredients.map( (ingredient) => (
-                  <IngredientExcerpt key={ingredient._id} ingredientId={ingredient._id} />
-                ))}
-              </IngredientTable>
+              size.width > config.smallScreen ? (
+                <IngredientTable>
+                  {searchedIngredients.map( (ingredient) => (
+                    <IngredientExcerpt key={ingredient._id} ingredientId={ingredient._id} />
+                  ))}
+                </IngredientTable>
+              ) : (
+                searchedIngredients.map( (ingredient) => (
+                  <SmallIngredientExcerpt key={ingredient._id} ingredientId={ingredient._id} />
+                ))
+              )
             )
             :   (
-              size.width > 540 ? (
+              size.width > config.smallScreen ? (
                 <IngredientTable>
                   {ingredientsIds.map( (ingredientId) => (
                     <IngredientExcerpt key={ingredientId} ingredientId={ingredientId} />
