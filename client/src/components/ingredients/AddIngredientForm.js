@@ -77,6 +77,7 @@ const AddIngredientForm = () => {
     e.preventDefault();
     setAddRequestStatus("pending");
     try {
+      console.log(existingIngredient);
       if (existingIngredient.length) {
         const addValue = Number(quantity);
         const finalQuantity = existingIngredient[0].quantity + addValue;
@@ -89,7 +90,7 @@ const AddIngredientForm = () => {
       }
       setName("");
       setQuantity("");
-      toast({ position: "top", duration: 3000, status: "success", title: `${name} added to stock !` });
+      toast({ position: "top", duration: 3000, status: "success", title: `${name} added !` });
     } catch (e) {
       toast({ position: "top", duration: 3000, status: "error", title: "Failed to save ingredient : " + e.message });
     } finally {
