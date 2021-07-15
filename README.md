@@ -19,19 +19,20 @@ Or run client and api separately :
 Runs the app in the development mode.\
 Open [http://localhost:8081](http://localhost:8081) to view it in the browser.
 
-# Linter
+## Linter
 Config for linter is in client -> package.json
+
 Linter config for api is in api -> eslintconfig.json
 ### `npm run lint` to see issues in api or client folder
 ### `npm run lintfix` to fix issues in api or client folder
 
 
-# Main features
+## Main features
 
-CRUD on ingredient :
+### CRUD on ingredient :
 Add a new ingredient with a name, quantity, and/or emoji
 Update the name
 Update the quantity by passing a number -> calculate the new quantity
 Delete an ingredient
 
-Searchbar allows to filter ingredients by name and display the ingredients matching this name
+Searchbar allows to filter ingredients by name and display the ingredients matching this name.
