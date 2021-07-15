@@ -8,13 +8,15 @@ import useSearchable from "../hooks/useSearchable";
 import useUserInput from "../hooks/useUserInput";
 import IngredientTable from "./IngredientTable";
 import IngredientExcerpt from "./IngredientExcerpt";
-
+import useWindowSize from "../hooks/useSize";
+import SmallIngredientExcerpt from "./SmallIngredientExcerpt";
 
 const IngredientsList = () => {
   const ingredients = useSelector(selectAllIngredients);
   const ingredientsIds = useSelector(selectIngredientsIds);
   const ingredientStatus = useSelector((state) => state.ingredients.status);
 
+  const size = useWindowSize();
   const searchInput = useUserInput("");
   const searchedIngredients = useSearchable(ingredients, searchInput.value, (ingredient) => [ingredient.name]);
   let content;
@@ -44,11 +46,17 @@ const IngredientsList = () => {
               </IngredientTable>
             )
             :   (
-              <IngredientTable>
-                {ingredientsIds.map( (ingredientId) => (
-                  <IngredientExcerpt key={ingredientId} ingredientId={ingredientId} />
-                ))}
-              </IngredientTable>
+              size.width > 540 ? (
+                <IngredientTable>
+                  {ingredientsIds.map( (ingredientId) => (
+                    <IngredientExcerpt key={ingredientId} ingredientId={ingredientId} />
+                  ))}
+                </IngredientTable>
+              ) : (
+                ingredientsIds.map( (ingredientId) => (
+                  <SmallIngredientExcerpt key={ingredientId} ingredientId={ingredientId} />
+                ))
+              )
             )
           }
         </>;

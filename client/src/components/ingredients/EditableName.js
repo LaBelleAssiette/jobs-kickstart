@@ -22,6 +22,7 @@ import { EditIcon } from "@chakra-ui/icons";
 
 import { updateIngredient } from "./ingredientsSlice";
 import { convertUnicode } from "../../helpers/emoji.helper";
+import { isFilled } from "../../helpers/input.helper";
 
 const EditableName = ({ ingredient }) => {
   const [ name, setName ] = useState("");
@@ -33,7 +34,7 @@ const EditableName = ({ ingredient }) => {
   const { onOpen, onClose, isOpen } = useDisclosure();
   const firstFieldRef = React.useRef(null);
 
-  const canSave = [name].every(Boolean) && addRequestStatus === "idle";
+  const canSave = [name].every(Boolean) && addRequestStatus === "idle" && isFilled(name);
 
   const onChangeName = e => setName(e.target.value);
 

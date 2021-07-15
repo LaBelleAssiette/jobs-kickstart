@@ -40,10 +40,10 @@ const EditQuantity = ({ ingredient }) => {
           children={
             !loading
               ?   (
-                <Box as="button" type="submit" width='30px' disabled={!canSave}>
-                  <Icon as={AddIcon} w={3}/>
+                <Box as="button" type="submit" width='20px' disabled={!canSave}>
+                  <Icon as={AddIcon} w={2}/>
                                 /
-                  <Icon as={MinusIcon} w={3}/>
+                  <Icon as={MinusIcon} w={2}/>
                 </Box>
               )
               :   (

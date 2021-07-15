@@ -5,6 +5,7 @@ import AddIngredientForm from "./AddIngredientForm";
 import IngredientsList from "./IngredientsList";
 
 const IngredientsScreen = () => {
+
   return (
     <Container maxW="container.xl">
       <AddIngredientForm />

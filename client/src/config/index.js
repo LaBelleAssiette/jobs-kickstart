@@ -1,0 +1,1 @@
+export const smallScreen = 640;

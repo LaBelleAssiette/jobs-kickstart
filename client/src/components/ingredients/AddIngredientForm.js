@@ -21,6 +21,7 @@ import {
 } from "@chakra-ui/react";
 
 import { addNewIngredient, updateIngredient, selectIngredientByName } from "./ingredientsSlice";
+import { isFilled } from "../../helpers/input.helper";
 import EmojisFinder from "../EmojisFinder";
 
 const AddIngredientForm = () => {
@@ -38,7 +39,7 @@ const AddIngredientForm = () => {
   const { isOpen, onToggle } = useDisclosure();
   const toast = useToast();
 
-  const canSave = [name, quantity].every(Boolean) && addRequestStatus === "idle" && /\S/.test(name) && /\S/.test(quantity);
+  const canSave = [name, quantity].every(Boolean) && addRequestStatus === "idle" && isFilled(name) && isFilled(quantity);
 
   const onChangeInput = async e => setEmojiInput(e.target.value);
 
@@ -57,7 +58,7 @@ const AddIngredientForm = () => {
   React.useEffect(() => {
     async function fetchEmojis() {
       try {
-        if (emojiInput) {
+        if (isFilled(emojiInput)) {
           const res = await axios.get(`https://api.emojisworld.io/v1/search?q=${emojiInput}`);
           if (res.data.totals > 0) {
             setfetchedEmojis(res.data.results);

@@ -2,8 +2,9 @@ import React from "react";
 import { Table, Thead, Tbody, Tr, Th, Box } from "@chakra-ui/react";
 
 const IngredientTable = ({ children }) => {
+
   return (
-    <Box overflowX = "auto">
+    <Box overflowX="auto">
       <Table size="sm">
         <Thead>
           <Tr>
